@@ -45,9 +45,9 @@ def main():
     context = Context.builder("user").set("key", "Sandy").build()
 
     while True:
-        time.sleep(1)
         result = client.variation("myount-events-test", context, "default")
         # print("feature-flag-name: ", result)
+        time.sleep(1/1000)
 
 if __name__ == "__main__":
     main()
