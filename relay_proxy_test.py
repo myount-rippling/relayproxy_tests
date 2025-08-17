@@ -11,6 +11,7 @@ import os
 RELAY_PROXY_URI = "http://localhost:8030"
 
 sdkKey = os.getenv("LD_ENV_DEVELOPMENT_SDK_KEY")
+print("sdkKey: ", sdkKey)
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)s:%(name)s:%(message)s")
 
 
@@ -25,11 +26,19 @@ def get_client():
         events_uri=RELAY_PROXY_URI,
     )
 
-    return LDClient(config)
 
+    client = LDClient(config=config, start_wait=15)
+
+    if not client.is_initialized():
+        print("ERROR: Client failed to initialize within timeout")
+        exit(1)
+
+    return client
 
 def main():
     client = get_client()
+
+    print("LaunchDarkly client initialized successfully!")
     context = Context.builder("user").set("key", "Sandy").build()
 
     while True:
