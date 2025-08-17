@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ld-relay-proxy:
+    image: launchdarkly/ld-relay:latest
+    container_name: ld-relay-proxy
+    ports:
+      - "8030:8030"
+    environment:
+      - LD_ENV_development=${LD_ENV_DEVELOPMENT_SDK_KEY}
+    restart: unless-stopped
