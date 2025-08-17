@@ -9,3 +9,16 @@ services:
     environment:
       - LD_ENV_development=${LD_ENV_DEVELOPMENT_SDK_KEY}
     restart: unless-stopped
+
+  mock-s3:
+    image: localstack/localstack:latest
+    container_name: mock-s3
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=us-east-1
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - ./localstack_data:/tmp/localstack
+    restart: unless-stopped
