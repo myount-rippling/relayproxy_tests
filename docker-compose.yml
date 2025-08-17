@@ -19,6 +19,26 @@ services:
       - SERVICES=s3
       - DEFAULT_REGION=us-east-1
       - AWS_DEFAULT_REGION=us-east-1
+      - PERSISTENCE=1
+      - DATA_DIR=/tmp/localstack_data
     volumes:
-      - ./localstack_data:/tmp/localstack
+      - localstack_data:/tmp/localstack_data
     restart: unless-stopped
+
+  s3-upload:
+    image: python:3.9-slim
+    container_name: s3-setup
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: >
+      sh -c "pip install boto3 &&
+             sleep 10 &&
+             python setup_s3.py"
+    depends_on:
+      mock-s3:
+        condition: service_started
+    restart: "no"
+
+volumes:
+  localstack_data:
