@@ -41,27 +41,31 @@ def get_client():
     return client
 
 def worker_thread():
-    client = get_client()
+    try:
+        client = get_client()
 
-    print("LaunchDarkly client initialized successfully!")
-    count = 0
+        logging.info("LaunchDarkly client initialized successfully!")
+        count = 0
 
-    while True:
-        count += 1
-        context = Context.builder("user").set("key", f"Sandy-{count}").build()
-        result = client.variation("myount-events-test", context, "default")
+        while True:
+            count %= 20000
+            count += 1
+            context = Context.builder("user").set("key", f"Sandy-{count}").build()
+            result = client.variation("myount-events-test", context, "default")
 
-        if count % 100 == 0:
-            print("feature-flag-name: ", count)
+            if count % 100 == 0:
+                logging.debug(f"feature-flag-name: {count}")
 
-        time.sleep(1/100)
+            time.sleep(1/100)
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        count = 0
+        return
 
-        if count > 10000:
-            break
 
 def main():
     threads = []
-    for i in range(100):
+    for i in range(10):
         thread = threading.Thread(target=worker_thread)
         threads.append(thread)
         thread.start()
