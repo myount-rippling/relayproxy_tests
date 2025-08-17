@@ -58,11 +58,11 @@ services:
     command: >
       sh -c "pip install launchdarkly-server-sdk &&
              python relay_proxy_test.py"
-    depends_on:
-      ld-relay-proxy:
-        condition: service_healthy
-      # s3-upload:
-      #   condition: service_completed_successfully
+    # depends_on:
+    #   ld-relay-proxy:
+    #     condition: service_started
+    #   s3-upload:
+    #     condition: service_completed_successfully
     restart: "no"
 
 volumes:
