@@ -8,7 +8,10 @@ from ldclient import Context, LDClient
 from ldclient.config import Config
 import os
 
-RELAY_PROXY_URI = "http://localhost:8030"
+LAUNCHDARKLY_BASE_URI="http://ld-relay-proxy:8030"
+LAUNCHDARKLY_STREAM_URI = "http://ld-relay-proxy:8030"
+# LAUNCHDARKLY_EVENTS_URI = "http://ld-relay-proxy:8030"
+LAUNCHDARKLY_EVENTS_URI = "https://events.launchdarkly.com"
 
 sdkKey = os.getenv("LD_ENV_DEVELOPMENT_SDK_KEY")
 print("sdkKey: ", sdkKey)
@@ -21,9 +24,9 @@ def get_client():
         application={"id": "failure-mode-test"},
         initial_reconnect_delay=1,
         poll_interval=30,
-        base_uri=RELAY_PROXY_URI,
-        stream_uri=RELAY_PROXY_URI,
-        events_uri=RELAY_PROXY_URI,
+        base_uri=LAUNCHDARKLY_BASE_URI,
+        stream_uri=LAUNCHDARKLY_STREAM_URI,
+        events_uri=LAUNCHDARKLY_EVENTS_URI,
     )
 
 
