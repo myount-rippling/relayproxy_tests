@@ -6,7 +6,7 @@ services:
       - "8030:8030"
     environment:
       - LD_ENV_development=${LD_ENV_DEVELOPMENT_SDK_KEY}
-      - USE_EVENTS=false
+      - USE_EVENTS=true
     # depends_on:
     #   - mock-s3
     healthcheck:

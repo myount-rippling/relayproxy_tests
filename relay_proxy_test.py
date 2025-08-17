@@ -11,8 +11,8 @@ import os
 
 LAUNCHDARKLY_BASE_URI="http://ld-relay-proxy:8030"
 LAUNCHDARKLY_STREAM_URI = "http://ld-relay-proxy:8030"
-# LAUNCHDARKLY_EVENTS_URI = "http://ld-relay-proxy:8030"
-LAUNCHDARKLY_EVENTS_URI = "https://events.launchdarkly.com"
+LAUNCHDARKLY_EVENTS_URI = "http://ld-relay-proxy:8030"
+# LAUNCHDARKLY_EVENTS_URI = "https://events.launchdarkly.com"
 
 sdkKey = os.getenv("LD_ENV_DEVELOPMENT_SDK_KEY")
 print("sdkKey: ", sdkKey)
