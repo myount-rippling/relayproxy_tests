@@ -4,6 +4,7 @@
 # ]
 # ///
 import time, logging
+import threading
 from ldclient import Context, LDClient
 from ldclient.config import Config
 import os
@@ -39,7 +40,7 @@ def get_client():
 
     return client
 
-def main():
+def worker_thread():
     client = get_client()
 
     print("LaunchDarkly client initialized successfully!")
@@ -49,8 +50,23 @@ def main():
         count += 1
         context = Context.builder("user").set("key", f"Sandy-{count}").build()
         result = client.variation("myount-events-test", context, "default")
-        print("feature-flag-name: ", result)
-        time.sleep(1)
+
+        if count % 100 == 0:
+            print("feature-flag-name: ", count)
+
+        time.sleep(1/100)
+
+        if count > 10000:
+            break
+
+def main():
+    threads = []
+    for i in range(100):
+        thread = threading.Thread(target=worker_thread)
+        threads.append(thread)
+        thread.start()
+    for thread in threads:
+        thread.join()
 
 if __name__ == "__main__":
     main()
