@@ -27,6 +27,7 @@ def get_client():
         base_uri=LAUNCHDARKLY_BASE_URI,
         stream_uri=LAUNCHDARKLY_STREAM_URI,
         events_uri=LAUNCHDARKLY_EVENTS_URI,
+        enable_event_compression=True,
     )
 
 
@@ -42,12 +43,14 @@ def main():
     client = get_client()
 
     print("LaunchDarkly client initialized successfully!")
-    context = Context.builder("user").set("key", "Sandy").build()
+    count = 0
 
     while True:
+        count += 1
+        context = Context.builder("user").set("key", f"Sandy-{count}").build()
         result = client.variation("myount-events-test", context, "default")
-        # print("feature-flag-name: ", result)
-        time.sleep(1/1000)
+        print("feature-flag-name: ", result)
+        time.sleep(1)
 
 if __name__ == "__main__":
     main()
