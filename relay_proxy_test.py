@@ -45,9 +45,9 @@ def main():
     context = Context.builder("user").set("key", "Sandy").build()
 
     while True:
-        print("LDClient initialized:", client.is_initialized())
-        print("feature-flag-name: ", client.variation("abhay-test-unreliable", context, "default"))
         time.sleep(1)
+        result = client.variation("myount-events-test", context, "default")
+        # print("feature-flag-name: ", result)
 
 if __name__ == "__main__":
     main()
